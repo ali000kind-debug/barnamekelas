@@ -100,7 +100,7 @@ input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--bd);bor
 :is(:root[data-theme="aurora"],:root[data-theme="ocean"],:root[data-theme="sakura"],:root[data-theme="forest"],:root[data-theme="sunset"],:root[data-theme="crystal"]) .blk{backdrop-filter:blur(10px);background:color-mix(in srgb,var(--pr) 22%,transparent)}
 :is(:root[data-theme="aurora"],:root[data-theme="ocean"],:root[data-theme="sakura"],:root[data-theme="forest"],:root[data-theme="sunset"],:root[data-theme="crystal"]) .tile.w{color:var(--pr)}
 </style>
-<meta name="theme-color" content="#0b4d33">
+<meta name="theme-color" content="#e6eaf0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script>
 (function(){var K='tp_icon';
@@ -116,7 +116,7 @@ window.tpIconPick=function(inp){var f=inp.files[0];if(!f)return;var im=new Image
 r.onload=function(){im.onload=function(){var s=512,c=document.createElement('canvas');c.width=c.height=s;var w=im.width,h=im.height,q=Math.min(w,h);c.getContext('2d').drawImage(im,(w-q)/2,(h-q)/2,q,q,0,0,s,s);
 try{localStorage.setItem(K,c.toDataURL('image/png'));apply();render();alert('آیکون ذخیره شد. برای آیفون: برنامه را حذف و دوباره اضافه کن. برای اندروید: دکمه «فایل آیکون» را بزن و دو فایل را روی GitHub جایگزین کن.')}catch(e){alert('ذخیره آیکون ممکن نشد')}};
 im.onerror=function(){alert('این فایل تصویر معتبر نیست')};im.src=r.result};r.readAsDataURL(f);inp.value=''};
-apply()})();
+apply();window.tpTC=function(){var c=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(),m=document.querySelector('meta[name=theme-color]');if(c&&m)m.content=c};tpTC()})();
 </script>
 <link rel="manifest" href="manifest.json">
 </head>
@@ -524,7 +524,7 @@ function tmToggle(){var e=document.getElementById('tm');if(e.style.display=='blo
   e.innerHTML=TABS.map(function(t){return'<button class="'+(t[0]==tab?'on':'')+'" onclick="go(\''+t[0]+'\')">'+t[2]+' '+t[1]+'</button>'}).join('')+'<button onclick="go(\'home\')">☰ منو و تم</button>';e.style.display='block'}
 document.addEventListener('click',function(e){var t=document.getElementById('tm');if(t.style.display=='block'&&!t.contains(e.target)&&e.target.id!='menub')t.style.display='none'});
 var THS=[['light','روشن','#e6eaf0'],['midnight','نیمه‌شب','#5b8cff'],['amoled','آمولد','#22e6a8'],['aurora','شفق','#c39bff'],['ember','اخگر','#ff9a3c'],['ocean','اقیانوس','#38d0f5'],['sakura','شکوفه','#ff8fbd'],['forest','جنگل','#4ade80'],['sunset','غروب','#ffa05a'],['crystal','کریستال','#a8c4ff']];
-function setTheme(n){try{localStorage.setItem('tp_theme',n)}catch(e){}document.documentElement.setAttribute('data-theme',n);render()}
+function setTheme(n){try{localStorage.setItem('tp_theme',n)}catch(e){}document.documentElement.setAttribute('data-theme',n);tpTC();render()}
 function bkBlob(){return new Blob([JSON.stringify(S)],{type:'application/json'})}
 function bkName(){return'planner-backup-'+iso(new Date())+'.json'}
 function bkMark(){try{localStorage.setItem('tp_lastbk',iso(new Date()))}catch(e){}render()}
