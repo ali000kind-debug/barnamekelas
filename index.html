@@ -100,6 +100,25 @@ input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--bd);bor
 :is(:root[data-theme="aurora"],:root[data-theme="ocean"],:root[data-theme="sakura"],:root[data-theme="forest"],:root[data-theme="sunset"],:root[data-theme="crystal"]) .blk{backdrop-filter:blur(10px);background:color-mix(in srgb,var(--pr) 22%,transparent)}
 :is(:root[data-theme="aurora"],:root[data-theme="ocean"],:root[data-theme="sakura"],:root[data-theme="forest"],:root[data-theme="sunset"],:root[data-theme="crystal"]) .tile.w{color:var(--pr)}
 </style>
+<meta name="theme-color" content="#4f46e5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function(){var K='tp_icon';
+function def(s){var c=document.createElement('canvas');c.width=c.height=s;var x=c.getContext('2d'),g=x.createLinearGradient(0,0,s,s);g.addColorStop(0,'#3b6cf6');g.addColorStop(1,'#7a5cf6');x.fillStyle=g;x.fillRect(0,0,s,s);x.fillStyle='#fff';var m=s*.26;x.fillRect(m,m*.95,s-2*m,s-1.9*m);x.fillStyle='#4f6df0';for(var i=0;i<3;i++)x.fillRect(s*.34,s*(.38+i*.14),s*.32,s*.05);return c.toDataURL('image/png')}
+function cur(){try{return localStorage.getItem(K)}catch(e){return null}}
+function link(rel){var l=document.querySelector('link[rel="'+rel+'"]');if(!l){l=document.createElement('link');l.rel=rel;document.head.appendChild(l)}return l}
+function apply(){var u=cur()||def(512),dir=location.href.split('#')[0].split('?')[0].replace(/[^\/]*$/,'');
+var m={name:'برنامه‌ریز کلاس‌های من',short_name:'برنامه‌ریز کلاس',lang:'fa',dir:'rtl',start_url:dir,scope:dir,display:'standalone',background_color:'#0e1322',theme_color:'#0e1322',icons:[{src:u,sizes:'512x512',type:'image/png',purpose:'any maskable'},{src:u,sizes:'192x192',type:'image/png',purpose:'any maskable'}]};
+var l=link('manifest');if(l._u)URL.revokeObjectURL(l._u);l._u=URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/manifest+json'}));l.href=l._u;
+link('apple-touch-icon').href=u;link('icon').href=u}
+window.tpIconCur=function(){return cur()||def(192)};
+window.tpIconReset=function(){try{localStorage.removeItem(K)}catch(e){}apply();render()};
+window.tpIconPick=function(inp){var f=inp.files[0];if(!f)return;var im=new Image,r=new FileReader;
+r.onload=function(){im.onload=function(){var s=512,c=document.createElement('canvas');c.width=c.height=s;var w=im.width,h=im.height,q=Math.min(w,h);c.getContext('2d').drawImage(im,(w-q)/2,(h-q)/2,q,q,0,0,s,s);
+try{localStorage.setItem(K,c.toDataURL('image/png'));apply();render();alert('آیکون ذخیره شد. برای دیدن آن روی صفحه گوشی، برنامه را حذف کن و دوباره نصب کن.')}catch(e){alert('ذخیره آیکون ممکن نشد')}};
+im.onerror=function(){alert('این فایل تصویر معتبر نیست')};im.src=r.result};r.readAsDataURL(f);inp.value=''};
+apply()})();
+</script>
 </head>
 <body>
 <div id="al" class="al"></div>
@@ -529,6 +548,7 @@ function vHome(){
     '<div class="mu" style="margin:22px 0 8px">🎨 تم برنامه</div><div class="chips" style="justify-content:center">'+THS.map(function(t){return'<button class="th'+(t[0]==cur?' on':'')+'" onclick="setTheme(\''+t[0]+'\')"><i style="background:'+t[2]+'"></i>'+t[1]+'</button>'}).join('')+'</div>'+
     '<div class="mu" style="margin:22px 0 8px">💾 پشتیبان‌گیری'+(function(){var l='';try{l=localStorage.getItem('tp_lastbk')}catch(e){}return l?' (آخرین: '+dfull(isoD(l))+')':''})()+'</div>'+
     '<div class="chips" style="justify-content:center"><button class="th" onclick="bkDl()">⬇️ دانلود فایل</button><button class="th" onclick="bkMail()">✉️ ارسال با ایمیل</button><button class="th" onclick="document.getElementById(\'bkf\').click()">⬆️ بازیابی</button></div>'+
+    '<div class="mu" style="margin:22px 0 8px">🖼️ آیکون برنامه</div><div class="chips" style="justify-content:center;align-items:center"><img src="'+tpIconCur()+'" width="56" height="56" style="border-radius:14px"><button class="th" onclick="document.getElementById(\'icf\').click()">🖼️ انتخاب تصویر</button><button class="th" onclick="tpIconReset()">↩️ پیش‌فرض</button></div><input type="file" id="icf" accept="image/*" style="display:none" onchange="tpIconPick(this)">'+
     '<input type="file" id="bkf" accept=".json,application/json" style="display:none" onchange="bkRestore(this)"></div>';
 }
 function render(){
@@ -544,5 +564,6 @@ function render(){
 document.getElementById('fab').onclick=function(){({cal:editCls,stu:editStu,tsk:addItem})[tab]()};
 calInit();chk();setInterval(chk,15000);render();sbLoad();
 </script>
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js'));</script>
 </body>
 </html>
